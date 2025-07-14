@@ -1,0 +1,85 @@
+#root {
+  max-width : 1280px;
+  margin    : 0 auto;
+  padding   : 2rem;
+  text-align: center;
+}
+
+.logo {
+  height     : 6em;
+  padding    : 1.5em;
+  will-change: filter;
+  transition : filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.alerta {
+  position: absolute;
+  top     : 1em;
+  right   : 1em;
+  padding : 1em;
+  width   : 300px;
+
+  display    : flex;
+  align-items: center;
+  gap        : 1em;
+
+  background-color: #ffffffbc;
+  backdrop-filter : blur(10px);
+  border-left     : .5rem solid;
+  border-radius   : 0.5em;
+  box-shadow      : 0 8px 16px rgba(0, 0, 0, 0.2);
+
+  color      : #000;
+  font-weight: 600;
+  font-size  : 1.2rem;
+
+  opacity   : 0;
+  transform : scale(0.9) translateY(-20px);
+  transition: all 0.3s ease;
+  z-index   : 2000;
+}
+
+.alerta--activa {
+  opacity  : 1;
+  transform: scale(1) translateY(0);
+}
+
+.alerta.error {
+  border-color: #ff4d4f;
+}
+
+.alerta.success {
+  border-color: #4ee800;
+}
