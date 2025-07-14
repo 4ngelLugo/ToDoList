@@ -1,8 +1,8 @@
 import useCrearTarea from "../../hooks/useCrearTarea"
 
-export default function CrearTarea({ setAlerta }) {
+export default function CrearTarea({ setAlerta, setVista }) {
 
-  const { handleSubmit, formRef } = useCrearTarea({ setAlerta })
+  const { handleSubmit, formRef } = useCrearTarea({ setAlerta, setVista })
 
   return (
     <>

@@ -34,17 +34,15 @@ if (!$conexion) {
 
 // Recibir todos los datos enviados por POST
 $datos = [
-  "titulo"              => $_POST['titulo'] ?? null,
-  "descripcion"         => $_POST['descripcion'] ?? null,
-  "usuario_id"          => $_POST['usuario_id'] ?? null,
-  "ciudad"              => $_POST['ciudad'] ?? null,
-  "clima_actual"        => $_POST['clima_actual'] ?? null,
-  "frase_motivacional"  => $_POST['frase_motivacional'] ?? null
+  "id"          => $_POST['id'] ?? null,
+  "titulo"      => $_POST['titulo'] ?? null,
+  "descripcion" => $_POST['descripcion'] ?? null,
+  "ciudad"      => $_POST['ciudad'] ?? null,
 ];
 
 $controller = new TareaController($conexion);
 
-$resultado = $controller->guardarTarea($datos);
+$resultado = $controller->editarTarea($datos);
 
 if (isset($resultado["error"])) {
   http_response_code(500);

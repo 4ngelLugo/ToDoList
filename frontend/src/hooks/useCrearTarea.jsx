@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import useFraseMotivacional from '../services/useFraseMotivacional'
 
-export default function useCrearTarea({ setAlerta }) {
+export default function useCrearTarea({ setAlerta, setVista }) {
   const formRef = useRef(null)
 
   // Obtiene los datos del usuario que inicion sesión para enviar su id en la tarea
@@ -34,7 +34,6 @@ export default function useCrearTarea({ setAlerta }) {
       })
 
       const response = await res.json()
-      console.log(response)
 
       if (response.error) {
         setAlerta({
@@ -51,6 +50,8 @@ export default function useCrearTarea({ setAlerta }) {
           mensaje: 'Tarea creada con exito',
           isActiva: true
         })
+
+        setVista('listarTareas')
       }
 
     } catch (e) {

@@ -5,20 +5,13 @@ require_once './Controller/TareaController.php';
 // Cabeceras para permitir CORS y definir el tipo de contenido
 // Estas cabeceras permiten que el frontend pueda hacer peticiones a este endpoint desde un origen diferente y el servidor responda con el tipoo de contenido adecuado (.JSON)
 header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-type: application/json; charset=utf-8");
 header("Access-Control-Allow-Credentials: true");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
   http_response_code(200);
-  exit();
-}
-
-// Verificar que el metodo por el que se envian los datos sea POST
-if ($_SERVER["REQUEST_METHOD"] !== 'POST') {
-  http_response_code(405);
-  echo json_encode(["error" => "Metodo de petición invalido"]);
   exit();
 }
 
@@ -33,18 +26,11 @@ if (!$conexion) {
 }
 
 // Recibir todos los datos enviados por POST
-$datos = [
-  "titulo"              => $_POST['titulo'] ?? null,
-  "descripcion"         => $_POST['descripcion'] ?? null,
-  "usuario_id"          => $_POST['usuario_id'] ?? null,
-  "ciudad"              => $_POST['ciudad'] ?? null,
-  "clima_actual"        => $_POST['clima_actual'] ?? null,
-  "frase_motivacional"  => $_POST['frase_motivacional'] ?? null
-];
+$id = $_GET["tarea_id"];
 
 $controller = new TareaController($conexion);
 
-$resultado = $controller->guardarTarea($datos);
+$resultado = $controller->eliminarTarea($id);
 
 if (isset($resultado["error"])) {
   http_response_code(500);

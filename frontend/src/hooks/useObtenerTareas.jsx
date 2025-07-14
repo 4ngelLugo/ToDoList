@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-export default function useObtenerTareas({ setAlerta }) {
+export default function useObtenerTareas({ setAlerta, tareaId = null, usuarioId = null }) {
   const [tareas, setTareas] = useState(null)
 
-  const ENDPOINT = "http://localhost/PruebaTecnicaBrangus/backend/tareas/index.php"
+  const get =
+    tareaId ?
+      `?tarea_id=${tareaId}` :
+      usuarioId ?
+        `?usuario_id=${usuarioId}` : ''
 
-  useEffect(() => {
-    fetch(ENDPOINT, {
+  const ENDPOINT = 'http://localhost/PruebaTecnicaBrangus/backend/tareas/index.php'
+
+  const obtenerTareas = useCallback(() => {
+    fetch(`${ENDPOINT}${get}`, {
       credentials: 'include'
     })
       .then(res => res.json())
@@ -32,7 +38,12 @@ export default function useObtenerTareas({ setAlerta }) {
           isActiva: true
         })
       })
-  }, [setAlerta])
+  }, [setAlerta, get])
 
-  return { tareas }
+
+  useEffect(() => {
+    obtenerTareas()
+  }, [obtenerTareas])
+
+  return { tareas, obtenerTareas }
 }

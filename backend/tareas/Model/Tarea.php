@@ -71,7 +71,7 @@ class Tarea
       FROM {$this->tabla_tareas} t
       LEFT JOIN {$this->tabla_usuarios} u
         ON t.usuario_id = u.id
-      ORDER BY t.id ASC";
+      ORDER BY t.id, t.estado DESC";
       $stmt = $this->conn->prepare($sql);
 
       if (!$stmt) throw new PDOException("Ocurrió un error al preparar la consulta");
@@ -107,9 +107,9 @@ class Tarea
         t.frase_motivacional as fraseMotivacional
       FROM {$this->tabla_tareas} t
       LEFT JOIN {$this->tabla_usuarios} u
-        ON t.usuario_id = u.usuario_id
+        ON t.usuario_id = u.id
       WHERE t.usuario_id = :usuario_id
-      ORDER BY t.id ASC";
+      ORDER BY t.id, t.estado DESC";
       $stmt = $this->conn->prepare($sql);
 
       if (!$stmt) throw new PDOException("Ocurrió un error al preparar la consulta");
@@ -147,7 +147,7 @@ class Tarea
         t.frase_motivacional as fraseMotivacional
       FROM {$this->tabla_tareas} t
       LEFT JOIN {$this->tabla_usuarios} u
-        ON t.usuario_id = u.usuario_id
+        ON t.usuario_id = u.id
       WHERE t.id = :id
       ORDER BY t.id ASC";
       $stmt = $this->conn->prepare($sql);
@@ -166,6 +166,76 @@ class Tarea
       if ($datos) return ["success" => true, "datos" => $datos];
 
       return ["error" => "Tarea no encontrada"];
+    } catch (PDOException $e) {
+      return ["error" => $e->getMessage()];
+    }
+  }
+
+  public function editarTarea(array $datos)
+  {
+    try {
+      $sql = "UPDATE {$this->tabla_tareas} SET
+        titulo = :titulo,
+        descripcion = :descripcion,
+        ciudad = :ciudad
+      WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+
+      if (!$stmt) throw new PDOException("Ocurrió un error al preparar la consulta");
+
+      $stmt->bindParam(":titulo", $datos["titulo"]);
+      $stmt->bindParam(":descripcion", $datos["descripcion"]);
+      $stmt->bindParam(":ciudad", $datos["ciudad"]);
+      $stmt->bindParam(":id", $datos["id"]);
+
+      if (!$stmt->execute()) throw new PDOException("Ocurrió un error al editar la tarea");
+
+      $stmt = null; // Cierra la declaración
+      return ["success" => true];
+    } catch (PDOException $e) {
+      return ["error" => $e->getMessage()];
+    }
+  }
+
+  public function completarTarea(int $id)
+  {
+    $estado = "completada";
+
+    try {
+      $sql = "UPDATE {$this->tabla_tareas} SET
+        estado = :estado
+      WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+
+      if (!$stmt) throw new PDOException("Ocurrió un error al preparar la consulta");
+
+      $stmt->bindParam(":estado", $estado);
+      $stmt->bindParam(":id", $id);
+
+      if (!$stmt->execute()) throw new PDOException("Ocurrió un error al completar la tarea");
+
+      $stmt = null; // Cierra la declaración
+      return ["success" => true];
+    } catch (PDOException $e) {
+      return ["error" => $e->getMessage()];
+    }
+  }
+
+  public function eliminarTarea(int $id)
+  {
+    try {
+      $sql = "DELETE FROM {$this->tabla_tareas}
+      WHERE id = :id";
+      $stmt = $this->conn->prepare($sql);
+
+      if (!$stmt) throw new PDOException("Ocurrió un error al preparar la consulta");
+
+      $stmt->bindParam(":id", $id);
+
+      if (!$stmt->execute()) throw new PDOException("Ocurrió un error al eliminar la tarea");
+
+      $stmt = null; // Cierra la declaración
+      return ["success" => true];
     } catch (PDOException $e) {
       return ["error" => $e->getMessage()];
     }

@@ -46,11 +46,50 @@ class TareaController
   public function obtenerTareaPorId(int $id)
   {
     // Valida que los campos reequeridos no esten vacios
-    if (empty($id)) return ["error" => "No se establecio la tarea"];
+    if (empty($id)) return ["error" => "No se establecio una tarea a buscar"];
 
     $resultado = $this->modelo_tarea->obtenerTareaPorId($id);
     if ($resultado) return $resultado;
 
     return ["error" => "Ocurrió un error al obtener la tarea"];
+  }
+
+  public function editarTarea(array $datos)
+  {
+    // Valida que los campos reequeridos no esten vacios
+    if (
+      empty($datos['titulo']) ||
+      empty($datos['descripcion']) ||
+      empty($datos['ciudad'])
+    ) return ["error" => "Complete todos los campos"];
+
+    if (empty($datos['id'])) return ["error" => "No se establecio una tarea a editar"];
+
+    $resultado = $this->modelo_tarea->editarTarea($datos);
+    if ($resultado) return $resultado;
+
+    return ["error" => "Ocurrió un error al editar la tarea"];
+  }
+
+  public function completarTarea(int $id)
+  {
+    // Valida que los campos reequeridos no esten vacios
+    if (empty($id)) return ["error" => "No se establecio una tarea a completar"];
+
+    $resultado = $this->modelo_tarea->completarTarea($id);
+    if ($resultado) return $resultado;
+
+    return ["error" => "Ocurrió un error al completar la tarea"];
+  }
+
+  public function eliminarTarea(int $id)
+  {
+    // Valida que los campos reequeridos no esten vacios
+    if (empty($id)) return ["error" => "No se establecio una tarea a eliminar"];
+
+    $resultado = $this->modelo_tarea->eliminarTarea($id);
+    if ($resultado) return $resultado;
+
+    return ["error" => "Ocurrió un error al eliminar la tarea"];
   }
 }

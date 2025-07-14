@@ -29,7 +29,7 @@ export default function useAutenticar({ setAlerta }) {
       localStorage.setItem("isAutenticado", response.isAutenticado || false)
       localStorage.setItem("usuario", JSON.stringify(response.usuario) || '')
 
-      navigate('/app')
+      navigate('/tareas')
     } catch (e) {
       console.error(e)
       setAlerta("Ocurrió un error en la petición")

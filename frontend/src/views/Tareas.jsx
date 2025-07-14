@@ -4,30 +4,48 @@ import Alerta from '../components/common/Alerta'
 import CrearUsuario from '../components/features/CrearUsuario'
 import CrearTarea from '../components/features/CrearTarea'
 import ListarTareas from '../components/features/ListarTareas'
+import EditarTarea from '../components/features/EditarTarea'
 
 export default function Tareas() {
   const [vista, setVista] = useState('listarTareas')
+  const [tareaEditar, setTareaEditar] = useState('listarTareas')
   const [alerta, setAlerta] = useState({ type: '', message: '', active: false })
   const alertaRef = useRef(null)
 
   return (
     <>
       <aside>
-        <ul>
-          <p onClick={() => setVista('listarTareas')}>Listar Tareas</p>
-          <p onClick={() => setVista('crearTarea')}>Crear Tarea</p>
-          <p onClick={() => setVista('editarTarea')}>Editar Tarea</p>
-        </ul>
-        <ul>
-          <p onClick={() => setVista('crearUsuario')}>Crear Usuario</p>
-        </ul>
+        <div>
+          <ul>
+            <p onClick={() => setVista('listarTareas')}>Listar Tareas</p>
+            <p onClick={() => setVista('crearTarea')}>Crear Tarea</p>
+          </ul>
+          <ul>
+            <p onClick={() => setVista('crearUsuario')}>Crear Usuario</p>
+          </ul>
+        </div>
+        <button type="button">Cerrar Sesión</button>
       </aside>
       <main>
         {vista === 'listarTareas' && (
-          <ListarTareas setAlerta={setAlerta} />
+          <ListarTareas
+            setAlerta={setAlerta}
+            setVista={setVista}
+            setTareaEditar={setTareaEditar}
+          />
         )}
         {vista === 'crearTarea' && (
-          <CrearTarea setAlerta={setAlerta} />
+          <CrearTarea
+            setAlerta={setAlerta}
+            setVista={setVista}
+          />
+        )}
+        {vista === 'editarTarea' && (
+          <EditarTarea
+            setAlerta={setAlerta}
+            tareaEditar={tareaEditar}
+            setVista={setVista}
+          />
         )}
         {vista === 'crearUsuario' && (
           <CrearUsuario setAlerta={setAlerta} />
