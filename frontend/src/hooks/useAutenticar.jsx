@@ -27,7 +27,7 @@ export default function useAutenticar({ setAlerta }) {
       }
 
       localStorage.setItem("isAutenticado", response.isAutenticado || false)
-      localStorage.setItem("usuario", response.usuario || '')
+      localStorage.setItem("usuario", JSON.stringify(response.usuario) || '')
 
       navigate('/app')
     } catch (e) {

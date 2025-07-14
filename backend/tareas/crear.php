@@ -1,11 +1,11 @@
 <?php
 require_once '../config/Database.php';
-require_once './Controller/UsuarioController.php';
+require_once './Controller/TareaController.php';
 
 // Cabeceras para permitir CORS y definir el tipo de contenido
 // Estas cabeceras permiten que el frontend pueda hacer peticiones a este endpoint desde un origen diferente y el servidor responda con el tipoo de contenido adecuado (.JSON)
 header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-type: application/json; charset=utf-8");
 header("Access-Control-Allow-Credentials: true");
@@ -33,13 +33,18 @@ if (!$conexion) {
 }
 
 // Recibir todos los datos enviados por POST
-$correo = $_POST["correo"] ?? null;
-$contrasena = $_POST["contrasena"] ?? null;
+$datos = [
+  "titulo"              => $_POST['titulo'] ?? null,
+  "descripcion"         => $_POST['descripcion'] ?? null,
+  "usuario_id"          => $_POST['usuario_id'] ?? null,
+  "ciudad"              => $_POST['ciudad'] ?? null,
+  "clima_actual"        => $_POST['clima_actual'] ?? null,
+  "frase_motivacional"  => $_POST['frase_motivacional'] ?? null
+];
 
-$controller = new UsuarioController($conexion);
+$controller = new TareaController($conexion);
 
-// Pasar todos los datos al método del controlador y crear el usuario. Verificando si hubo algun error
-$resultado = $controller->guardarUsuario($correo, $contrasena);
+$resultado = $controller->guardarTarea($datos);
 
 if (isset($resultado["error"])) {
   http_response_code(500);

@@ -1,9 +1,11 @@
 import { useState, useRef } from 'react'
 import '../styles/App.css'
-import CrearUsuario from '../components/features/CrearUsuario'
 import Alerta from '../components/common/Alerta'
+import CrearUsuario from '../components/features/CrearUsuario'
+import CrearTarea from '../components/features/CrearTarea'
+import ListarTareas from '../components/features/ListarTareas'
 
-function App() {
+export default function Tareas() {
   const [vista, setVista] = useState('listarTareas')
   const [alerta, setAlerta] = useState({ type: '', message: '', active: false })
   const alertaRef = useRef(null)
@@ -21,6 +23,12 @@ function App() {
         </ul>
       </aside>
       <main>
+        {vista === 'listarTareas' && (
+          <ListarTareas setAlerta={setAlerta} />
+        )}
+        {vista === 'crearTarea' && (
+          <CrearTarea setAlerta={setAlerta} />
+        )}
         {vista === 'crearUsuario' && (
           <CrearUsuario setAlerta={setAlerta} />
         )}
@@ -35,5 +43,3 @@ function App() {
     </>
   )
 }
-
-export default App
