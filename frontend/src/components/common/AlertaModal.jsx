@@ -1,35 +1,34 @@
-export default function AlertaModal({
+export default function AlertaModal ({
   titulo,
   mensaje,
   mostrarModal,
   setMostrarModal,
   accion
 }) {
-
   return (
     <>
       {mostrarModal && (
         <div className='modal__container'>
           <div className='modal'>
-            <div className="modal__icon">
+            <div className='modal__icon'>
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 21 21"
-                className="icon icon--alerta"
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 21 21'
+                className='icon icon--alerta'
               >
                 <g
-                  fill="none"
-                  fillRule="evenodd"
-                  transform="translate(1 1)"
+                  fill='none'
+                  fillRule='evenodd'
+                  transform='translate(1 1)'
                 >
                   <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="1.5"
-                    d="m9.5.5l9 16H.5zm0 10v-5"
+                    stroke='currentColor'
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='1.5'
+                    d='m9.5.5l9 16H.5zm0 10v-5'
                   />
-                  <circle cx="9.5" cy="13.5" r="1" fill="currentColor" />
+                  <circle cx='9.5' cy='13.5' r='1' fill='currentColor' />
                 </g>
               </svg>
             </div>
@@ -39,7 +38,7 @@ export default function AlertaModal({
             <div className='modal__buttons'>
               <button
                 onClick={() => setMostrarModal(false)}
-                className="icon--delete"
+                className='icon--delete'
                 style={{ filter: 'grayScale(1)' }}
               >
                 Cancelar
@@ -56,8 +55,7 @@ export default function AlertaModal({
             </div>
           </div>
         </div>
-      )
-      }
+      )}
     </>
   )
 }

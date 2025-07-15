@@ -1,7 +1,6 @@
-export default function useFraseMotivacional() {
-
+export default function useFraseMotivacional () {
   const getFrase = async () => {
-    const res = await fetch("https://api.quotable.io/random")
+    const res = await fetch('https://api.quotable.io/random')
 
     const response = await res.json()
 

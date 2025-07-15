@@ -1,17 +1,18 @@
-import { useState } from "react"
+import { useState } from 'react'
+import { API_BASE } from '../constants/url'
 
-export default function useEliminarTarea({ setAlerta, recargar }) {
-
+export default function useEliminarTarea ({ setAlerta, recargar }) {
   const [tareaEliminar, setTareaEliminar] = useState({ id: null, titulo: null })
   const [mostrarModal, setMostrarModal] = useState(false)
 
   const handleEliminar = async () => {
-    const ENDPOINT = 'http://localhost/PruebaTecnicaBrangus/backend/tareas/eliminar.php?tarea_id='
+    const ENDPOINT = `${API_BASE}tareas/eliminar.php?tarea_id=`
 
     try {
       const res = await fetch(`${ENDPOINT}${tareaEliminar.id}`, {
+        credentials: 'include',
         headers: {
-          'Authorization': localStorage.getItem('token')
+          Authorization: localStorage.getItem('token')
         }
       })
 
@@ -38,7 +39,6 @@ export default function useEliminarTarea({ setAlerta, recargar }) {
           isActiva: true
         })
       }
-
     } catch (e) {
       console.error(e)
       setAlerta({

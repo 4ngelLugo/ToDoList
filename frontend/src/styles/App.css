@@ -49,7 +49,7 @@
   background-color: #dba35b;
   border          : 1px solid #a57433;
   border-radius   : 100%;
-  
+
 }
 
 .sidebar__buttons {
@@ -233,7 +233,7 @@
 
 .alerta {
   position: absolute;
-  bottom  : 1em;
+  top  : 1em;
   right   : 1em;
   padding : 1em;
   width   : 300px;
@@ -271,4 +271,11 @@
 
 .alerta.success {
   border-color: #77ea94;
+}
+
+.noTasks {
+  padding-left: 1rem;
+
+  color    : #794909;
+  font-size: 2rem;
 }

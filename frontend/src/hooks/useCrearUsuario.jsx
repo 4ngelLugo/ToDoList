@@ -1,9 +1,10 @@
 import { useRef } from 'react'
+import { API_BASE } from '../constants/url'
 
-export default function useCrearUsuario({ setAlerta, setModal }) {
+export default function useCrearUsuario ({ setAlerta, setModal }) {
   const formRef = useRef(null)
 
-  const ENDPOINT = "http://localhost/PruebaTecnicaBrangus/backend/usuarios/crear.php"
+  const ENDPOINT = `${API_BASE}usuarios/crear.php`
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -16,7 +17,7 @@ export default function useCrearUsuario({ setAlerta, setModal }) {
         body: formData,
         credentials: 'include',
         headers: {
-          'Authorization': localStorage.getItem('token')
+          Authorization: localStorage.getItem('token')
         }
       })
 
@@ -40,7 +41,6 @@ export default function useCrearUsuario({ setAlerta, setModal }) {
 
         setModal(null)
       }
-
     } catch (e) {
       console.error(e)
       setAlerta({
@@ -48,7 +48,6 @@ export default function useCrearUsuario({ setAlerta, setModal }) {
         mensaje: 'Ocurrió un error en la petición',
         isActiva: true
       })
-
     }
   }
 

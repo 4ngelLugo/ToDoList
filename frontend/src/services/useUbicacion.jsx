@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default function useUbicacion() {
+export default function useUbicacion () {
   const [ubicacion, setUbicacion] = useState({
     lat: null,
     lon: null,
@@ -10,7 +10,7 @@ export default function useUbicacion() {
   useEffect(() => {
     const fetchUbicacion = async () => {
       try {
-        const res = await fetch("http://ip-api.com/json/")
+        const res = await fetch('http://ip-api.com/json/')
 
         const response = await res.json()
 

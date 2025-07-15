@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export default function Alerta({ alertaRef, tipo, mensaje, isActiva, setAlerta }) {
+export default function Alerta ({ alertaRef, tipo, mensaje, isActiva, setAlerta }) {
   useEffect(() => {
     // Si el elemento de la alerta no existe, no se ejecuta el efecto
     if (!alertaRef.current) return

@@ -5,7 +5,6 @@ import Tareas from './views/Tareas.jsx'
 import Login from './views/Login.jsx'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -15,5 +14,5 @@ createRoot(document.getElementById('root')).render(
         <Route path='/tareas' element={<Tareas />} />
       </Routes>
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode>
 )

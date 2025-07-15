@@ -1,18 +1,18 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import '../styles/App.css'
 import Alerta from '../components/common/Alerta'
 import CrearUsuario from '../components/features/CrearUsuario'
 import CrearTarea from '../components/features/CrearTarea'
 import ListarTareas from '../components/features/ListarTareas'
 import EditarTarea from '../components/features/EditarTarea'
-import useObtenerTareas from "../hooks/useObtenerTareas"
+import useObtenerTareas from '../hooks/useObtenerTareas'
 import useClimaActual from '../services/useClimaActual'
 import useUbicacion from '../services/useUbicacion'
 import AlertaModal from '../components/common/AlertaModal'
 import useCerrarSesion from '../hooks/useCerrarSesion'
 
-export default function Tareas() {
+export default function Tareas () {
   // Verificación de autenticación
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAutenticado') === 'true')
   const [cerrar, setCerrar] = useState(false)
@@ -54,29 +54,31 @@ export default function Tareas() {
         <>
           <aside className='sidebar'>
             <div className='sidebar__buttons'>
-              <div className="clima">
-                {clima ? (
-                  <>
-                    <div className='clima__icon'>
-                      <img
-                        src={`https://openweathermap.org/img/wn/${clima?.weather[0]?.icon}@2x.png`}
-                        alt={clima?.weather[0]?.description}
-                        width={50}
-                      />
-                    </div>
-                    <span>{`${clima?.weather[0]?.main} (${clima?.weather[0]?.description})`}</span>
-                  </>
-                ) : (
-                  <p>Cargando...</p>
-                )}
+              <div className='clima'>
+                {clima
+                  ? (
+                    <>
+                      <div className='clima__icon'>
+                        <img
+                          src={`https://openweathermap.org/img/wn/${clima?.weather[0]?.icon}@2x.png`}
+                          alt={clima?.weather[0]?.description}
+                          width={50}
+                        />
+                      </div>
+                      <span>{`${clima?.weather[0]?.main} (${clima?.weather[0]?.description})`}</span>
+                    </>
+                    )
+                  : (
+                    <p>Cargando...</p>
+                    )}
               </div>
 
               <ul>
-                <p onClick={() => setModal('crearTarea')} className='sidebar__button' >Crear Tarea</p>
-                <p onClick={() => setModal('crearUsuario')} className='sidebar__button' >Crear Usuario</p>
+                <p onClick={() => setModal('crearTarea')} className='sidebar__button'>Crear Tarea</p>
+                <p onClick={() => setModal('crearUsuario')} className='sidebar__button'>Crear Usuario</p>
               </ul>
             </div>
-            <button onClick={() => setCerrar(true)} type="button" className='cerrar_sesion'>Cerrar Sesión</button>
+            <button onClick={() => setCerrar(true)} type='button' className='cerrar_sesion'>Cerrar Sesión</button>
           </aside>
           <main className='tareas__main'>
             <ListarTareas

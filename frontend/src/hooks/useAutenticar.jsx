@@ -1,14 +1,15 @@
 import { useRef } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
+import { API_BASE } from '../constants/url'
 
-export default function useAutenticar({ setAlerta }) {
+export default function useAutenticar ({ setAlerta }) {
   // Referencia del formulario, para obtener sus datos
   const formRef = useRef(null)
   // Hook para cambiar de pagina
   const navigate = useNavigate()
 
   // URL del endpoint de autenticación
-  const URL_AUTH = "http://localhost/PruebaTecnicaBrangus/backend/auth/validarSesion.php"
+  const URL_AUTH = `${API_BASE}auth/validarSesion.php`
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -33,16 +34,16 @@ export default function useAutenticar({ setAlerta }) {
         return
       }
 
-      localStorage.setItem("isAutenticado", response.isAutenticado || false)
-      localStorage.setItem("usuario", JSON.stringify(response.usuario) || '')
-      localStorage.setItem("token", response.token || '')
+      localStorage.setItem('isAutenticado', response.isAutenticado || false)
+      localStorage.setItem('usuario', JSON.stringify(response.usuario) || '')
+      localStorage.setItem('token', response.token || '')
 
       navigate('/tareas')
     } catch (e) {
       console.error(e)
       setAlerta({
         tipo: 'error',
-        mensaje: "Ocurrió un error en la petición",
+        mensaje: 'Ocurrió un error en la petición',
         isActiva: true
       })
     }

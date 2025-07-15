@@ -1,6 +1,7 @@
 import { useRef } from 'react'
+import { API_BASE } from '../constants/url'
 
-export default function useEditarTarea({
+export default function useEditarTarea ({
   setAlerta,
   tareaId,
   setModal,
@@ -9,7 +10,7 @@ export default function useEditarTarea({
 }) {
   const formRef = useRef(null)
 
-  const ENDPOINT = "http://localhost/PruebaTecnicaBrangus/backend/tareas/editar.php"
+  const ENDPOINT = `${API_BASE}tareas/editar.php`
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -25,7 +26,7 @@ export default function useEditarTarea({
         body: formData,
         credentials: 'include',
         headers: {
-          'Authorization': localStorage.getItem('token')
+          Authorization: localStorage.getItem('token')
         }
       })
 
@@ -51,7 +52,6 @@ export default function useEditarTarea({
         recargar()
         setModal(null)
       }
-
     } catch (e) {
       console.error(e)
       setAlerta({

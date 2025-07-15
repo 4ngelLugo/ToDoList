@@ -1,7 +1,8 @@
 import { useRef } from 'react'
 import useFraseMotivacional from '../services/useFraseMotivacional'
+import { API_BASE } from '../constants/url'
 
-export default function useCrearTarea({ setAlerta, ciudad, clima, setModal, recargar }) {
+export default function useCrearTarea ({ setAlerta, ciudad, clima, setModal, recargar }) {
   // Referencia del formulario para obtener sus datos
   const formRef = useRef(null)
 
@@ -13,7 +14,7 @@ export default function useCrearTarea({ setAlerta, ciudad, clima, setModal, reca
   const { getFrase } = useFraseMotivacional()
 
   // Url del endpoint para crear la tarea
-  const ENDPOINT = "http://localhost/PruebaTecnicaBrangus/backend/tareas/crear.php"
+  const ENDPOINT = `${API_BASE}tareas/crear.php`
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -21,7 +22,7 @@ export default function useCrearTarea({ setAlerta, ciudad, clima, setModal, reca
     const formData = new FormData(formRef.current)
 
     // Obtiene una frase motivacional de la api quotable.io
-    let frase = await getFrase()
+    const frase = await getFrase()
 
     // Añade datos que no ingresa el usuario al objeto FormData para enviarlos en la petición
     formData.append('usuario_id', usuario.id)
@@ -35,7 +36,7 @@ export default function useCrearTarea({ setAlerta, ciudad, clima, setModal, reca
         body: formData,
         credentials: 'include',
         headers: {
-          'Authorization': localStorage.getItem('token')
+          Authorization: localStorage.getItem('token')
         }
       })
 
@@ -60,7 +61,6 @@ export default function useCrearTarea({ setAlerta, ciudad, clima, setModal, reca
         recargar()
         setModal('')
       }
-
     } catch (e) {
       console.error(e)
       setAlerta({
