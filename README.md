@@ -13,12 +13,12 @@ Repositorio de la prueba técnica para la empresa Brangus, que incluye un backen
 
 ## Instalación
 
-###1. **Clonar el repositorio**
+1. ###**Clonar el repositorio**
 
   - Clonar el repositorio en la carpeta htdocs de xampp [C:\xampp\htdocs]
 
 
-2. **Configurar base de datos**
+2. ###Configurar base de datos
 
   - Importar el archivo .sql que se encuentra en la carpeta raiz del repositorio en su administrador de MySQL
 > [!TIP]
