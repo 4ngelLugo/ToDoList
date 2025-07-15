@@ -7,8 +7,11 @@ Repositorio de la prueba técnica para la empresa Brangus, que incluye un backen
 > ## Requisitos
 >
 > **PHP** con extensiones PDO habilitadas
+>
 > **Servidor web** Apache
+> 
 > **MySQL** o MariaDB equivalente
+> 
 > **Node.js** y **npm**/ **npx**
 
 ## Instalación
@@ -62,3 +65,6 @@ Repositorio de la prueba técnica para la empresa Brangus, que incluye un backen
   `npm run dev`
   - Aparecera un link, debe asegurarse de que el puerto de este sea '5173'
   - Al entrar al link podra empezar a usar la aplicación
+  - Podra ingresar con las credenciales:
+> correo: admin@gmail.com
+> contraseña: admin
