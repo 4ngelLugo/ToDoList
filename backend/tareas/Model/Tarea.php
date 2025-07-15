@@ -176,8 +176,7 @@ class Tarea
     try {
       $sql = "UPDATE {$this->tabla_tareas} SET
         titulo = :titulo,
-        descripcion = :descripcion,
-        ciudad = :ciudad
+        descripcion = :descripcion
       WHERE id = :id";
       $stmt = $this->conn->prepare($sql);
 
@@ -185,7 +184,6 @@ class Tarea
 
       $stmt->bindParam(":titulo", $datos["titulo"]);
       $stmt->bindParam(":descripcion", $datos["descripcion"]);
-      $stmt->bindParam(":ciudad", $datos["ciudad"]);
       $stmt->bindParam(":id", $datos["id"]);
 
       if (!$stmt->execute()) throw new PDOException("Ocurrió un error al editar la tarea");

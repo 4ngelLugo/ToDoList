@@ -19,12 +19,6 @@ export default function useCompletarTarea({ setAlerta, recargar }) {
 
       if (response.success) {
         recargar()
-
-        setAlerta({
-          tipo: 'success',
-          mensaje: 'Tarea completada con exito',
-          isActiva: true
-        })
       }
 
     } catch (e) {

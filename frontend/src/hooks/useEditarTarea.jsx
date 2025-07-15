@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-export default function useEditarTarea({ setAlerta, tareaId, setVista }) {
+export default function useEditarTarea({ setAlerta, tareaId, setModal, recargar }) {
   const formRef = useRef(null)
 
   const ENDPOINT = "http://localhost/PruebaTecnicaBrangus/backend/tareas/editar.php"
@@ -38,7 +38,8 @@ export default function useEditarTarea({ setAlerta, tareaId, setVista }) {
           isActiva: true
         })
 
-        setVista('listarTareas')
+        recargar()
+        setModal(null)
       }
 
     } catch (e) {

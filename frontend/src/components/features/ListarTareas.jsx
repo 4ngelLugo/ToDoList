@@ -1,21 +1,20 @@
-import useObtenerTareas from "../../hooks/useObtenerTareas"
-import edit from '../../assets/icons/edit.svg'
-import del from '../../assets/icons/delete.svg'
-import complete from '../../assets/icons/complete.svg'
 import AlertaModal from "../common/AlertaModal"
 import useEliminarTarea from "../../hooks/useEliminarTarea"
 import useCompletarTarea from "../../hooks/useCompletarTarea"
 
-export default function ListarTareas({ setAlerta, setVista, setTareaEditar }) {
+import '../../styles/listarTareas.css'
+import TareaCard from "../common/TareaCard"
 
-  // Obtiene los datos del usuario que inicion sesión para listar las tareas con su id
-  const usuarioData = localStorage.getItem('usuario')
-  const usuario = usuarioData ? JSON.parse(usuarioData) : null
-
-  const { tareas, obtenerTareas } = useObtenerTareas({ setAlerta, usuarioId: usuario.id })
+export default function ListarTareas({
+  setAlerta,
+  setModal,
+  setTareaEditar,
+  tareas, 
+  obtenerTareas
+}) {
 
   const handleEditar = (vista, tareaId) => {
-    setVista(vista)
+    setModal(vista)
     setTareaEditar(tareaId)
   }
 
@@ -36,71 +35,41 @@ export default function ListarTareas({ setAlerta, setVista, setTareaEditar }) {
 
   return (
     <>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Titulo</th>
-            <th>Descripción</th>
-            <th>Usuario</th>
-            <th>Estado</th>
-            <th>Fecha de creación</th>
-            <th>Ciudad</th>
-            <th>Frase Motivacional</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tareas ? tareas.map(({
-            id,
-            titulo,
-            descripcion,
-            usuarioCorreo,
-            estado,
-            fechaCreacion,
-            ciudad,
-            fraseMotivacional
-          }) => (
-            <tr key={id}>
-              <td>{id}</td>
-              <td>{titulo}</td>
-              <td>{descripcion}</td>
-              <td>{usuarioCorreo}</td>
-              <td>{estado}</td>
-              <td>{fechaCreacion}</td>
-              <td>{ciudad || 'N/N'}</td>
-              <td>{fraseMotivacional || 'N/N'}</td>
-              <td>
-                <img
-                  onClick={() => handleEditar('editarTarea', id)}
-                  src={edit}
-                  alt="icono de editar tarea"
-                />
-                <img
-                  onClick={() => handleAlertaModal(id, titulo)}
-                  src={del}
-                  alt="icono de borrar tarea"
-                />
-                {estado !== 'completada' && (
-                  <img
-                    onClick={() => handleCompletar(id)}
-                    src={complete}
-                    alt="icono de completar tarea"
-                  />
-                )}
-              </td>
-            </tr>
-          )) : (
-            <tr>
-              <td colSpan={9}>No se encontró ninguna tarea.</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <section className="lista__tareas">
+        {tareas ? tareas.map(({
+          id,
+          titulo,
+          descripcion,
+          usuarioCorreo,
+          estado,
+          fechaCreacion,
+          ciudad,
+          fraseMotivacional
+        }) => (
+          <TareaCard
+            key={id}
+            id={id}
+            titulo={titulo}
+            estado={estado}
+            completar={handleCompletar}
+            descripcion={descripcion}
+            fraseMotivacional={fraseMotivacional}
+            correo={usuarioCorreo}
+            fechaCreacion={fechaCreacion}
+            ciudad={ciudad}
+            editar={handleEditar}
+            eliminar={handleAlertaModal}
+          />
+        )) : (
+          <div>
+            <span colSpan={9}>No se encontró ninguna tarea.</span>
+          </div>
+        )}
+      </section>
 
       <AlertaModal
-        titulo='¿Esta seguro que desea borrar esta tarea?'
-        mensaje={`${tareaEliminar.id} - ${tareaEliminar.titulo}`}
+        titulo='¿Esta seguro que desea eliminar esta tarea?'
+        mensaje={tareaEliminar.titulo}
         mostrarModal={mostrarModal}
         setMostrarModal={setMostrarModal}
         accion={handleEliminar}

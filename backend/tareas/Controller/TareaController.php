@@ -59,8 +59,7 @@ class TareaController
     // Valida que los campos reequeridos no esten vacios
     if (
       empty($datos['titulo']) ||
-      empty($datos['descripcion']) ||
-      empty($datos['ciudad'])
+      empty($datos['descripcion'])
     ) return ["error" => "Complete todos los campos"];
 
     if (empty($datos['id'])) return ["error" => "No se establecio una tarea a editar"];

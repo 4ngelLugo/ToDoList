@@ -1,69 +1,110 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router'
 import '../styles/App.css'
 import Alerta from '../components/common/Alerta'
 import CrearUsuario from '../components/features/CrearUsuario'
 import CrearTarea from '../components/features/CrearTarea'
 import ListarTareas from '../components/features/ListarTareas'
 import EditarTarea from '../components/features/EditarTarea'
+import useObtenerTareas from "../hooks/useObtenerTareas"
 import useClimaActual from '../services/useClimaActual'
 import useUbicacion from '../services/useUbicacion'
+import AlertaModal from '../components/common/AlertaModal'
 
 export default function Tareas() {
-  const [vista, setVista] = useState('listarTareas')
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAutenticado') === 'true')
+  const [cerrar, setCerrar] = useState(false)
+  const navigate = useNavigate()
+
+  const [modal, setModal] = useState('listarTareas')
   const [tareaEditar, setTareaEditar] = useState('listarTareas')
+
   const [alerta, setAlerta] = useState({ type: '', message: '', active: false })
   const alertaRef = useRef(null)
 
-  const { lat, lon } = useUbicacion()
+  useEffect(() => {
+    if (!isAuthenticated) navigate('/inicio')
+  }, [isAuthenticated, navigate])
+
+  const { lat, lon, ciudad } = useUbicacion()
   const { clima } = useClimaActual({ latitude: lat, longitude: lon })
-  console.log(`${clima?.weather[0]?.main} (${clima?.weather[0]?.description})`)
+
+  // Obtiene los datos del usuario que inicion sesión para listar las tareas con su id
+  const usuarioData = localStorage.getItem('usuario')
+  const usuario = usuarioData ? JSON.parse(usuarioData) : null
+
+  const { tareas, obtenerTareas } = useObtenerTareas({
+    setAlerta,
+    usuarioId: usuario?.id || null
+  })
 
   return (
     <>
-      <aside>
-        <div>
-          <ul>
-            <p onClick={() => setVista('listarTareas')}>Listar Tareas</p>
-            <p onClick={() => setVista('crearTarea')}>Crear Tarea</p>
-          </ul>
-          <ul>
-            <p onClick={() => setVista('crearUsuario')}>Crear Usuario</p>
-          </ul>
-        </div>
-        <button type="button">Cerrar Sesión</button>
-      </aside>
-      <main>
-        {vista === 'listarTareas' && (
-          <ListarTareas
+      {isAuthenticated === true && (
+        <>
+          <aside className='sidebar'>
+            <div className='sidebar__buttons'>
+              <ul>
+                <p onClick={() => setModal('crearTarea')} className='sidebar__button' >Crear Tarea</p>
+              </ul>
+              <ul>
+                <p onClick={() => setModal('crearUsuario')} className='sidebar__button' >Crear Usuario</p>
+              </ul>
+            </div>
+            <button onClick={() => setCerrar(true)} type="button" className='cerrar_sesion'>Cerrar Sesión</button>
+          </aside>
+          <main className='tareas__main'>
+            <ListarTareas
+              setAlerta={setAlerta}
+              setModal={setModal}
+              setTareaEditar={setTareaEditar}
+              obtenerTareas={obtenerTareas}
+              tareas={tareas}
+            />
+
+            {modal === 'crearTarea' && (
+              <CrearTarea
+                setAlerta={setAlerta}
+                ciudad={ciudad}
+                clima={`${clima?.weather[0]?.main} (${clima?.weather[0]?.description})`}
+                modal={modal}
+                setModal={setModal}
+                recargar={obtenerTareas}
+              />
+            )}
+            {modal === 'editarTarea' && (
+              <EditarTarea
+                setAlerta={setAlerta}
+                tareaEditar={tareaEditar}
+                modal={modal}
+                setModal={setModal}
+                recargar={obtenerTareas}
+              />
+            )}
+            {modal === 'crearUsuario' && (
+              <CrearUsuario
+                setAlerta={setAlerta}
+                modal={modal}
+                setModal={setModal}
+              />
+            )}
+          </main>
+          <Alerta
+            alertaRef={alertaRef}
+            tipo={alerta.tipo}
+            mensaje={alerta.mensaje}
+            isActiva={alerta.isActiva}
             setAlerta={setAlerta}
-            setVista={setVista}
-            setTareaEditar={setTareaEditar}
           />
-        )}
-        {vista === 'crearTarea' && (
-          <CrearTarea
-            setAlerta={setAlerta}
-            setVista={setVista}
+
+          <AlertaModal
+            titulo='¿Esta seguro que desea cerrar la sesión?'
+            mostrarModal={cerrar}
+            setMostrarModal={setCerrar}
+            setIsAuthenticated={setIsAuthenticated}
           />
-        )}
-        {vista === 'editarTarea' && (
-          <EditarTarea
-            setAlerta={setAlerta}
-            tareaEditar={tareaEditar}
-            setVista={setVista}
-          />
-        )}
-        {vista === 'crearUsuario' && (
-          <CrearUsuario setAlerta={setAlerta} />
-        )}
-      </main>
-      <Alerta
-        alertaRef={alertaRef}
-        tipo={alerta.tipo}
-        mensaje={alerta.mensaje}
-        isActiva={alerta.isActiva}
-        setAlerta={setAlerta}
-      />
+        </>
+      )}
     </>
   )
 }

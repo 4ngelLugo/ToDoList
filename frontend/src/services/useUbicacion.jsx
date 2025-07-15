@@ -4,6 +4,7 @@ export default function useUbicacion() {
   const [ubicacion, setUbicacion] = useState({
     lat: null,
     lon: null,
+    ciudad: null
   })
 
   useEffect(() => {
@@ -13,8 +14,8 @@ export default function useUbicacion() {
 
         const response = await res.json()
 
-        const { lat, lon } = response
-        setUbicacion({ lat, lon })
+        const { lat, lon, city } = response
+        setUbicacion({ lat, lon, ciudad: city })
       } catch (err) {
         console.error(err)
       }

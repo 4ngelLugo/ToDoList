@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import useFraseMotivacional from '../services/useFraseMotivacional'
 
-export default function useCrearTarea({ setAlerta, setVista }) {
+export default function useCrearTarea({ setAlerta, ciudad, clima, setModal, recargar }) {
   const formRef = useRef(null)
 
   // Obtiene los datos del usuario que inicion sesión para enviar su id en la tarea
@@ -23,7 +23,8 @@ export default function useCrearTarea({ setAlerta, setVista }) {
 
     // Añade datos que no ingresa el usuario al objeto FormData para enviarlos en la petición
     formData.append('usuario_id', usuario.id)
-    formData.append('clima_actual', 'Soleado')
+    formData.append('ciudad', ciudad)
+    formData.append('clima_actual', clima)
     formData.append('frase_motivacional', frase)
 
     try {
@@ -51,7 +52,8 @@ export default function useCrearTarea({ setAlerta, setVista }) {
           isActiva: true
         })
 
-        setVista('listarTareas')
+        recargar()
+        setModal('')
       }
 
     } catch (e) {

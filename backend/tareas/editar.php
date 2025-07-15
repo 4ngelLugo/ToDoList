@@ -36,8 +36,7 @@ if (!$conexion) {
 $datos = [
   "id"          => $_POST['id'] ?? null,
   "titulo"      => $_POST['titulo'] ?? null,
-  "descripcion" => $_POST['descripcion'] ?? null,
-  "ciudad"      => $_POST['ciudad'] ?? null,
+  "descripcion" => $_POST['descripcion'] ?? null
 ];
 
 $controller = new TareaController($conexion);

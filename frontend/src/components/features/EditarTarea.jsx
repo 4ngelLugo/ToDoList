@@ -1,32 +1,41 @@
 import useEditarTarea from "../../hooks/useEditarTarea"
 import useObtenerTareas from "../../hooks/useObtenerTareas"
 
-export default function EditarTarea({ setAlerta, tareaEditar, setVista }) {
+export default function EditarTarea({
+  setAlerta,
+  tareaEditar,
+  modal,
+  setModal,
+  recargar
+}) {
 
   const { tareas: tarea } = useObtenerTareas({ setAlerta, tareaId: tareaEditar })
 
-  const { handleSubmit, formRef } = useEditarTarea({ setAlerta, tareaId: tareaEditar, setVista })
+  const { handleSubmit, formRef } = useEditarTarea({ setAlerta, tareaId: tareaEditar, setModal, recargar })
 
   return (
     <>
-      {tarea && (
-        <form ref={formRef} onSubmit={handleSubmit}>
-          <div className="form__input">
-            <label htmlFor="titulo">Titulo</label>
-            <input type="text" id="titulo" name="titulo" defaultValue={tarea.titulo} />
-          </div>
-          <div className="form__input">
-            <label htmlFor="titulo">Descripción</label>
-            <textarea id="descripcion" name="descripcion" defaultValue={tarea.descripcion} />
-          </div>
-          <div className="form__input">
-            <label htmlFor="ciudad">Ciudad</label>
-            <input type="text" id="ciudad" name="ciudad" defaultValue={tarea.ciudad} />
-          </div>
+      {modal === 'editarTarea' &&
+        tarea && (
+          <div className="modal__container">
+            <form ref={formRef} onSubmit={handleSubmit} className='modal'>
+              <p className="form__title">Editar Tarea</p>
+              <div className="form__input">
+                <label htmlFor="titulo">Titulo</label>
+                <input type="text" id="titulo" name="titulo" placeholder="Titulo de la tarea" defaultValue={tarea.titulo} />
+              </div>
+              <div className="form__input">
+                <label htmlFor="titulo">Descripción</label>
+                <textarea id="descripcion" name="descripcion" placeholder="Descripción de la tarea" defaultValue={tarea.descripcion} />
+              </div>
 
-          <button type="submit">Editar Tarea</button>
-        </form>
-      )}
+              <div className="form__buttons">
+                <button type='button' onClick={() => setModal(null)} className="icon--delete">Cancelar</button>
+                <button type="submit" className="icon--create">Editar Tarea</button>
+              </div>
+            </form>
+          </div>
+        )}
     </>
   )
 }
