@@ -67,4 +67,5 @@ Repositorio de la prueba técnica para la empresa Brangus, que incluye un backen
   - Al entrar al link podra empezar a usar la aplicación
   - Podra ingresar con las credenciales:
 > correo: admin@gmail.com
+> 
 > contraseña: admin
