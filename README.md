@@ -21,6 +21,7 @@ Repositorio de la prueba técnica para la empresa Brangus, que incluye un backen
 
 - Importar el archivo .sql que se encuentra en la carpeta raiz del repositorio en su administrador de MySQL
   > [!TIP]
+  > 
   > Se recomienda nombrar la base de datos todo_app
 
 3. **Configurar el backend**
@@ -37,15 +38,19 @@ Repositorio de la prueba técnica para la empresa Brangus, que incluye un backen
 
 4. **Configurar frontend**
 
-- Entrar desde cmd, powershell o gitbash a la carpeta '/frontend': `cd C:\xampp\htdocs\PruebaTecnicaBrangus\frontend`
-- Una vez dentro de la carpeta '/frontend' en la consola, se debe instalar las dependencias usando: `npm install`
+- Entrar desde cmd, powershell o gitbash a la carpeta '/frontend':
+  `cd C:\xampp\htdocs\PruebaTecnicaBrangus\frontend`
+- Una vez dentro de la carpeta '/frontend' en la consola, se debe instalar las dependencias usando:
+  `npm install`
 - En caso de que en su servidor Apache se necesite escribir el puerto en la url para entrar, debe ingresar al archivo ubicado en '/frontend/src/constants/url.js' y ajustar la url
 - Crear un archivo llamado '.env' en la carpeta '/frontend'
 - Copiar en este el contenido de '.env.example' ubicado en la carpeta '/frontend', reemplazando "tu_api_key_aqui" por una API key valida de la pagina [openWeather](https://openweathermap.org/api)
 
 5. **Iniciar el proyecto**
 
-- Una vez configurado todo lo anterior, entrar desde cmd, powershell o gitbash a la carpeta '/frontend': `cd C:\xampp\htdocs\PruebaTecnicaBrangus\frontend`
-- En la consola ingresar `npm run dev`
+- Una vez configurado todo lo anterior, entrar desde cmd, powershell o gitbash a la carpeta '/frontend':
+  `cd C:\xampp\htdocs\PruebaTecnicaBrangus\frontend`
+- En la consola ingresar
+  `npm run dev`
 - Aparecera un link, debe asegurarse de que el puerto de este sea '5173'
 - Al entrar al link podra empezar a usar la aplicación
