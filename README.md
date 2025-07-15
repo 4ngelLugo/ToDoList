@@ -20,9 +20,9 @@ Repositorio de la prueba técnica para la empresa Brangus, que incluye un backen
 2. **Configurar base de datos**
 
 - Importar el archivo .sql que se encuentra en la carpeta raiz del repositorio en su administrador de MySQL
-  > [!NOTE]
-  > 
-  > Se recomienda nombrar la base de datos todo_app
+> [!TIP]
+> 
+> Se recomienda nombrar la base de datos todo_app
 
 3. **Configurar el backend**
 
