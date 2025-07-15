@@ -44,10 +44,25 @@ export default function Tareas() {
         <>
           <aside className='sidebar'>
             <div className='sidebar__buttons'>
+              <div className="clima">
+                {clima ? (
+                  <>
+                    <div className='clima__icon'>
+                      <img
+                        src={`https://openweathermap.org/img/wn/${clima?.weather[0]?.icon}@2x.png`}
+                        alt={clima?.weather[0]?.description}
+                        width={50}
+                      />
+                    </div>
+                    <span>{`${clima?.weather[0]?.main} (${clima?.weather[0]?.description})`}</span>
+                  </>
+                ) : (
+                  <p>Cargando...</p>
+                )}
+              </div>
+
               <ul>
                 <p onClick={() => setModal('crearTarea')} className='sidebar__button' >Crear Tarea</p>
-              </ul>
-              <ul>
                 <p onClick={() => setModal('crearUsuario')} className='sidebar__button' >Crear Usuario</p>
               </ul>
             </div>

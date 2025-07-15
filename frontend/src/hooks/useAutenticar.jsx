@@ -22,7 +22,11 @@ export default function useAutenticar({ setAlerta }) {
       const response = await res.json()
 
       if (response.error) {
-        setAlerta(response.error)
+        setAlerta({
+          tipo: 'error',
+          mensaje: response.error,
+          isActiva: true
+        })
         return
       }
 
@@ -32,7 +36,11 @@ export default function useAutenticar({ setAlerta }) {
       navigate('/tareas')
     } catch (e) {
       console.error(e)
-      setAlerta("Ocurrió un error en la petición")
+      setAlerta({
+        tipo: 'error',
+        mensaje: "Ocurrió un error en la petición",
+        isActiva: true
+      })
     }
   }
 

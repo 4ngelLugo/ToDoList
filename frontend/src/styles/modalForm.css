@@ -46,6 +46,11 @@
   resize: none;
 }
 
+.form__input input:focus,
+.form__input textarea:focus {
+  outline-color: #794909;
+}
+
 .form__input textarea {
   width : 350px;
   height: 100px;

@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import '../styles/login.css'
 import useAutenticar from '../hooks/useAutenticar'
+import Alerta from '../components/common/Alerta'
 
 export default function Login() {
 
-  const [alerta, setAlerta] = useState(null)
+  const [alerta, setAlerta] = useState({ type: '', message: '', active: false })
+  const alertaRef = useRef(null)
 
   const { handleSubmit, formRef } = useAutenticar({ setAlerta })
 
@@ -22,9 +24,16 @@ export default function Login() {
           <input type="password" id="contrasena" name="contrasena" placeholder='' />
         </div>
 
-        <button type="submit" className='loginForm__button'>Enviar</button>
+        <button type="submit" className='loginForm__button'>Iniciar</button>
       </form>
-      <div>{alerta}</div>
+
+      <Alerta
+        alertaRef={alertaRef}
+        tipo={alerta.tipo}
+        mensaje={alerta.mensaje}
+        isActiva={alerta.isActiva}
+        setAlerta={setAlerta}
+      />
     </main>
   )
 }
