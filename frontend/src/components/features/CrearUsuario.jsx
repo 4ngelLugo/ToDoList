@@ -2,6 +2,7 @@ import useCrearUsuario from "../../hooks/useCrearUsuario"
 
 export default function CrearUsuario({ setAlerta, modal, setModal }) {
 
+  // Hook para hacer la petición de crear el usuario
   const { handleSubmit, formRef } = useCrearUsuario({ setAlerta, setModal })
 
   return (

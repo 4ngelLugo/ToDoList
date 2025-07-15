@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once '../config/Database.php';
 require_once './Controller/TareaController.php';
 
@@ -6,12 +8,22 @@ require_once './Controller/TareaController.php';
 // Estas cabeceras permiten que el frontend pueda hacer peticiones a este endpoint desde un origen diferente y el servidor responda con el tipoo de contenido adecuado (.JSON)
 header("Access-Control-Allow-Origin: http://localhost:5173");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-type: application/json; charset=utf-8");
 header("Access-Control-Allow-Credentials: true");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
   http_response_code(200);
+  exit();
+}
+
+// Recibe el token de sesión de la petición y valida que esta exista en php
+$headers = getallheaders();
+$token = $headers['Authorization'] ?? '';
+
+if ($token !== $_SESSION['token']) {
+  http_response_code(401);
+  echo json_encode(['error' => 'Token inválido']);
   exit();
 }
 

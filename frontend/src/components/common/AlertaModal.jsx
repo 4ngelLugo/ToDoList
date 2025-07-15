@@ -3,15 +3,8 @@ export default function AlertaModal({
   mensaje,
   mostrarModal,
   setMostrarModal,
-  accion,
-  setIsAuthenticated
+  accion
 }) {
-
-  const cerrarSesion = () => {
-    localStorage.setItem('isAutenticado', false)
-    localStorage.removeItem('usuario')
-    setIsAuthenticated(false)
-  }
 
   return (
     <>
@@ -53,8 +46,7 @@ export default function AlertaModal({
               </button>
               <button
                 onClick={() => {
-                  if (typeof accion === 'function') accion()
-                  if (typeof setIsAuthenticated === 'function') cerrarSesion()
+                  accion()
                   setMostrarModal(false)
                 }}
                 className='icon--delete'

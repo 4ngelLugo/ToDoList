@@ -9,7 +9,11 @@ export default function useEliminarTarea({ setAlerta, recargar }) {
     const ENDPOINT = 'http://localhost/PruebaTecnicaBrangus/backend/tareas/eliminar.php?tarea_id='
 
     try {
-      const res = await fetch(`${ENDPOINT}${tareaEliminar.id}`)
+      const res = await fetch(`${ENDPOINT}${tareaEliminar.id}`, {
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
+      })
 
       const response = await res.json()
 

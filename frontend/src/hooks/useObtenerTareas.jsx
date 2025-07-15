@@ -13,10 +13,15 @@ export default function useObtenerTareas({ setAlerta, tareaId = null, usuarioId 
 
   const obtenerTareas = useCallback(() => {
     fetch(`${ENDPOINT}${get}`, {
-      credentials: 'include'
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Authorization': localStorage.getItem('token')
+      }
     })
       .then(res => res.json())
       .then(response => {
+        
         if (response.error) {
           setAlerta({
             tipo: 'error',
@@ -30,14 +35,14 @@ export default function useObtenerTareas({ setAlerta, tareaId = null, usuarioId 
           setTareas(response.datos)
         }
       })
-      .catch(error => {
-        console.error(error)
-        setAlerta({
-          tipo: 'error',
-          mensaje: 'Ocurrió un error en la petición',
-          isActiva: true
-        })
-      })
+      // .catch(error => {
+      //   console.error(error)
+      //   setAlerta({
+      //     tipo: 'error',
+      //     mensaje: 'Ocurrió un error en la petición',
+      //     isActiva: true
+      //   })
+      // })
   }, [setAlerta, get])
 
 

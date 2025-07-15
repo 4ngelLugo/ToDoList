@@ -10,6 +10,7 @@ export default function CrearTarea({
   recargar
 }) {
 
+  // Hace la petición para crear la tarea
   const { handleSubmit, formRef } = useCrearTarea({ setAlerta, ciudad, clima, setModal, recargar })
 
   return (

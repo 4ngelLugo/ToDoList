@@ -13,11 +13,13 @@ export default function ListarTareas({
   obtenerTareas
 }) {
 
+  // Al dar clic en editar, establece la tarea a editar en el estado y muestra el formulario de editar
   const handleEditar = (vista, tareaId) => {
-    setModal(vista)
     setTareaEditar(tareaId)
+    setModal(vista)
   }
 
+  // Hook para hacer la petición de eleiminar la tarea
   const {
     handleEliminar,
     tareaEliminar,
@@ -26,11 +28,13 @@ export default function ListarTareas({
     setMostrarModal
   } = useEliminarTarea({ setAlerta, recargar: obtenerTareas })
 
+  // Al dar clic en eliminar, establece la tarea a elimnar, y muestra la alerta de confirmación
   const handleAlertaModal = (id, titulo) => {
     setTareaEliminar({ id, titulo })
     setMostrarModal(true)
   }
 
+  // Hook para cambiar el estado de las tareas a "completada"
   const { handleCompletar } = useCompletarTarea({ setAlerta, recargar: obtenerTareas })
 
   return (

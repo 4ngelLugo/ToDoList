@@ -14,7 +14,10 @@ export default function useCrearUsuario({ setAlerta, setModal }) {
       const res = await fetch(ENDPOINT, {
         method: 'POST',
         body: formData,
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
       })
 
       const response = await res.json()

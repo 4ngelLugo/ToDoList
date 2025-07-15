@@ -10,22 +10,29 @@ import useObtenerTareas from "../hooks/useObtenerTareas"
 import useClimaActual from '../services/useClimaActual'
 import useUbicacion from '../services/useUbicacion'
 import AlertaModal from '../components/common/AlertaModal'
+import useCerrarSesion from '../hooks/useCerrarSesion'
 
 export default function Tareas() {
+  // Verificación de autenticación
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem('isAutenticado') === 'true')
   const [cerrar, setCerrar] = useState(false)
   const navigate = useNavigate()
 
-  const [modal, setModal] = useState('listarTareas')
-  const [tareaEditar, setTareaEditar] = useState('listarTareas')
-
-  const [alerta, setAlerta] = useState({ type: '', message: '', active: false })
-  const alertaRef = useRef(null)
-
+  // Valida que este autenticado, en caso de no estarlo redirige al inicio de sesion
   useEffect(() => {
     if (!isAuthenticated) navigate('/inicio')
   }, [isAuthenticated, navigate])
 
+  // Estado para mostrar modales de los formularios (Crear tarea, Editar tarea, Crear usuario)
+  const [modal, setModal] = useState(null)
+  // Estado para almacenar la tarea a editar
+  const [tareaEditar, setTareaEditar] = useState()
+
+  // Estado y referencia a la alerta denotifición
+  const [alerta, setAlerta] = useState({ type: '', message: '', active: false })
+  const alertaRef = useRef(null)
+
+  // Obtiene ubicacion y clima de las APIs
   const { lat, lon, ciudad } = useUbicacion()
   const { clima } = useClimaActual({ latitude: lat, longitude: lon })
 
@@ -33,10 +40,13 @@ export default function Tareas() {
   const usuarioData = localStorage.getItem('usuario')
   const usuario = usuarioData ? JSON.parse(usuarioData) : null
 
+  // Obtiene las tareas de el usuario en sesión
   const { tareas, obtenerTareas } = useObtenerTareas({
     setAlerta,
     usuarioId: usuario?.id || null
   })
+
+  const { cerrarSesion } = useCerrarSesion({ setIsAuthenticated })
 
   return (
     <>
@@ -91,6 +101,7 @@ export default function Tareas() {
               <EditarTarea
                 setAlerta={setAlerta}
                 tareaEditar={tareaEditar}
+                setTareaEditar={setTareaEditar}
                 modal={modal}
                 setModal={setModal}
                 recargar={obtenerTareas}
@@ -116,7 +127,7 @@ export default function Tareas() {
             titulo='¿Esta seguro que desea cerrar la sesión?'
             mostrarModal={cerrar}
             setMostrarModal={setCerrar}
-            setIsAuthenticated={setIsAuthenticated}
+            accion={cerrarSesion}
           />
         </>
       )}

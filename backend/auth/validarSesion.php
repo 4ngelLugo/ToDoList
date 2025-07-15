@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once '../config/Database.php';
 require_once '../usuarios/Controller/UsuarioController.php';
 require_once './Autenticacion.php';
@@ -54,12 +56,17 @@ if (!password_verify($contrasena, $usuario['datos']['contrasena'])) {
   exit();
 }
 
+$token = bin2hex(random_bytes(32)); // Genera un token de 64 caracteres aleatorios
+
+$_SESSION['token'] = $token;
+
 $datos = [
   "isAutenticado" => true,
   "usuario" => [
     "id" => $usuario['datos']['id'],
     "correo" => $usuario['datos']['correo']
-  ]
+  ],
+  "token" => $_SESSION['token']
 ];
 
 http_response_code(200);

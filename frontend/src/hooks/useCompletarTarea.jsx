@@ -1,10 +1,15 @@
 export default function useCompletarTarea({ setAlerta, recargar }) {
 
   const handleCompletar = async (id) => {
+    // Url del endpoint para completar la tarea
     const ENDPOINT = 'http://localhost/PruebaTecnicaBrangus/backend/tareas/completar.php?tarea_id='
 
     try {
-      const res = await fetch(`${ENDPOINT}${id}`)
+      const res = await fetch(`${ENDPOINT}${id}`, {
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
+      })
 
       const response = await res.json()
 

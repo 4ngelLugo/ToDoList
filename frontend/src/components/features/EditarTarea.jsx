@@ -4,14 +4,23 @@ import useObtenerTareas from "../../hooks/useObtenerTareas"
 export default function EditarTarea({
   setAlerta,
   tareaEditar,
+  setTareaEditar,
   modal,
   setModal,
   recargar
 }) {
 
+  // Obtiene la información de la tarea a editar
   const { tareas: tarea } = useObtenerTareas({ setAlerta, tareaId: tareaEditar })
 
-  const { handleSubmit, formRef } = useEditarTarea({ setAlerta, tareaId: tareaEditar, setModal, recargar })
+  // Hook para la petición de editar la terea
+  const { handleSubmit, formRef } = useEditarTarea({
+    setAlerta,
+    tareaId: tareaEditar,
+    setModal,
+    recargar,
+    setTareaEditar
+  })
 
   return (
     <>

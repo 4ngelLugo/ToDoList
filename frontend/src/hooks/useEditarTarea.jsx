@@ -1,6 +1,12 @@
 import { useRef } from 'react'
 
-export default function useEditarTarea({ setAlerta, tareaId, setModal, recargar }) {
+export default function useEditarTarea({
+  setAlerta,
+  tareaId,
+  setModal,
+  recargar,
+  setTareaEditar
+}) {
   const formRef = useRef(null)
 
   const ENDPOINT = "http://localhost/PruebaTecnicaBrangus/backend/tareas/editar.php"
@@ -17,7 +23,10 @@ export default function useEditarTarea({ setAlerta, tareaId, setModal, recargar 
       const res = await fetch(ENDPOINT, {
         method: 'POST',
         body: formData,
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
       })
 
       const response = await res.json()
@@ -38,6 +47,7 @@ export default function useEditarTarea({ setAlerta, tareaId, setModal, recargar 
           isActiva: true
         })
 
+        setTareaEditar(null)
         recargar()
         setModal(null)
       }

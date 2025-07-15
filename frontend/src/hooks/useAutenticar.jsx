@@ -2,9 +2,12 @@ import { useRef } from 'react'
 import { useNavigate } from 'react-router'
 
 export default function useAutenticar({ setAlerta }) {
+  // Referencia del formulario, para obtener sus datos
   const formRef = useRef(null)
+  // Hook para cambiar de pagina
   const navigate = useNavigate()
 
+  // URL del endpoint de autenticación
   const URL_AUTH = "http://localhost/PruebaTecnicaBrangus/backend/auth/validarSesion.php"
 
   const handleSubmit = async (e) => {
@@ -32,6 +35,7 @@ export default function useAutenticar({ setAlerta }) {
 
       localStorage.setItem("isAutenticado", response.isAutenticado || false)
       localStorage.setItem("usuario", JSON.stringify(response.usuario) || '')
+      localStorage.setItem("token", response.token || '')
 
       navigate('/tareas')
     } catch (e) {

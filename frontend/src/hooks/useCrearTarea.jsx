@@ -2,15 +2,17 @@ import { useRef } from 'react'
 import useFraseMotivacional from '../services/useFraseMotivacional'
 
 export default function useCrearTarea({ setAlerta, ciudad, clima, setModal, recargar }) {
+  // Referencia del formulario para obtener sus datos
   const formRef = useRef(null)
 
   // Obtiene los datos del usuario que inicion sesión para enviar su id en la tarea
   const usuarioData = localStorage.getItem('usuario')
   const usuario = usuarioData ? JSON.parse(usuarioData) : null
 
-  // Devuelve la función para obtener frases motivacionales de quotable.io
+  // Devuelve la función para obtener frases motivacionales aleatorias de quotable.io
   const { getFrase } = useFraseMotivacional()
 
+  // Url del endpoint para crear la tarea
   const ENDPOINT = "http://localhost/PruebaTecnicaBrangus/backend/tareas/crear.php"
 
   const handleSubmit = async (e) => {
@@ -31,7 +33,10 @@ export default function useCrearTarea({ setAlerta, ciudad, clima, setModal, reca
       const res = await fetch(ENDPOINT, {
         method: 'POST',
         body: formData,
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+          'Authorization': localStorage.getItem('token')
+        }
       })
 
       const response = await res.json()
