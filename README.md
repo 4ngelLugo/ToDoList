@@ -13,7 +13,7 @@ Repositorio de la prueba técnica para la empresa Brangus, que incluye un backen
 
 ## Instalación
 
-1. **Clonar el repositorio**
+###1. **Clonar el repositorio**
 
   - Clonar el repositorio en la carpeta htdocs de xampp [C:\xampp\htdocs]
 
