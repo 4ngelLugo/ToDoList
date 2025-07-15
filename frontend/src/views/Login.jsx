@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import '../styles/App.css'
+import '../styles/login.css'
 import useAutenticar from '../hooks/useAutenticar'
 
 export default function Login() {
@@ -9,16 +9,22 @@ export default function Login() {
   const { handleSubmit, formRef } = useAutenticar({ setAlerta })
 
   return (
-    <>
-      <h2>Hola</h2>
-      <form ref={formRef} onSubmit={handleSubmit}>
+    <main className='container'>
+      <form ref={formRef} onSubmit={handleSubmit} className='loginForm'>
+        <p className="loginForm__title">Iniciar Sesión</p>
 
-        <input type="email" id='correo' name='correo' />
-        <input type="password" id='contrasena' name='contrasena' />
+        <div className="loginForm__input">
+          <label htmlFor="correo">Correo Electronico</label>
+          <input type="email" id="correo" name="correo" placeholder='' />
+        </div>
+        <div className="loginForm__input">
+          <label htmlFor="contrasena">Contraseña</label>
+          <input type="password" id="contrasena" name="contrasena" placeholder='' />
+        </div>
 
-        <button type="submit">Enviar</button>
+        <button type="submit" className='loginForm__button'>Enviar</button>
       </form>
       <div>{alerta}</div>
-    </>
+    </main>
   )
 }

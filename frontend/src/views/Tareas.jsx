@@ -5,12 +5,18 @@ import CrearUsuario from '../components/features/CrearUsuario'
 import CrearTarea from '../components/features/CrearTarea'
 import ListarTareas from '../components/features/ListarTareas'
 import EditarTarea from '../components/features/EditarTarea'
+import useClimaActual from '../services/useClimaActual'
+import useUbicacion from '../services/useUbicacion'
 
 export default function Tareas() {
   const [vista, setVista] = useState('listarTareas')
   const [tareaEditar, setTareaEditar] = useState('listarTareas')
   const [alerta, setAlerta] = useState({ type: '', message: '', active: false })
   const alertaRef = useRef(null)
+
+  const { lat, lon } = useUbicacion()
+  const { clima } = useClimaActual({ latitude: lat, longitude: lon })
+  console.log(`${clima?.weather[0]?.main} (${clima?.weather[0]?.description})`)
 
   return (
     <>
