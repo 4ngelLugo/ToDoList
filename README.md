@@ -1,6 +1,4 @@
-# PRUEBA TECNICA BRANGUS
-
-Repositorio de la prueba técnica para la empresa Brangus, que incluye un backend en PHP, un frontend con ReactJS y usa CSS vanilla para los estilos
+# ToDo list
 
 > [!IMPORTANT]
 >
